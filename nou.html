@@ -426,24 +426,59 @@
         }
 
         function handleFormSubmit(event) {
-            event.preventDefault();
+            event.preventDefault(); // フォームの通常の送信を停止
             const form = document.getElementById('inquiryForm');
             const responseMessage = document.getElementById('responseMessage');
             
-            const selectedProducts = Array.from(form.querySelectorAll('input[name="product"]:checked')).map(cb => cb.value);
+            // フォームデータを収集
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            data.products = selectedProducts;
-            console.log("Form Data Submitted:", data);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                // チェックボックスは複数選択される可能性があるので配列として扱う
+                if (key === 'product') {
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            // チェックボックスが選択されなかった場合も空の配列として扱う
+            if (!data.product) {
+                data.product = [];
+            }
 
-            responseMessage.classList.add('hidden');
-            responseMessage.classList.remove('bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
-            
-            responseMessage.textContent = 'お問い合わせを受け付けました。ご入力いただいたメールアドレスにご確認のメールを送信しました。';
+            // メール本文を生成
+            let emailBody = "【農業ジョブ】お問い合わせフォームからの連絡\n\n";
+            emailBody += "----------------------------------------\n";
+            emailBody += `お名前: ${data.name || ''}\n`;
+            emailBody += `メールアドレス: ${data.email || ''}\n`;
+            emailBody += `電話番号: ${data.phone || ''}\n`;
+            emailBody += `希望される品目: ${data.product.join(', ') || '未選択'}\n`;
+            emailBody += `就農希望時期: ${data.start_time || ''}\n`;
+            emailBody += `お問い合わせ種別: ${data.type || ''}\n`;
+            emailBody += `お問い合わせ内容:\n${data.message || ''}\n`;
+            emailBody += "----------------------------------------\n";
+
+            // mailtoリンクを作成
+            // ここに送信先のメールアドレスを設定してください
+            const recipientEmail = "ここを設定する"; // ★★★ ここをあなたのメールアドレスに変更してください ★★★
+            const subject = "【農業ジョブ】お問い合わせフォーム";
+            const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+            // メールクライアントを開く
+            window.location.href = mailtoLink;
+
+            // ユーザーへのフィードバック
             responseMessage.classList.remove('hidden');
             responseMessage.classList.add('bg-green-100', 'text-green-800');
+            responseMessage.innerHTML = 'メールクライアントが起動しました。<br>内容をご確認の上、送信してください。';
             
-            form.reset();
+            // フォームをリセット (必要であれば)
+            // form.reset();
+            // モーダルを閉じる (必要であれば)
+            // setTimeout(closeContactModal, 3000);
         }
 
         // スクロールアニメーション
