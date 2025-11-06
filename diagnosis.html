@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自分に合った農業タイプ診断 | 農業ジョブ</title>
+    <!-- Tailwind CSS CDNを読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Interフォントを使用 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f0fdf4;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d1fae5' fill-opacity='0.5'%3E%3Cpath d='M6 0a6 6 0 1 0 0 12A6 6 0 0 0 6 0zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 60px 60px;
+            background-blend-mode: multiply; 
+        }
+        .btn-primary {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+        .form-input {
+            width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 0.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus {
+            border-color: #10b981; outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+        .question-card {
+            transition: all 0.3s;
+        }
+        .result-card {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- ヘッダー -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-green-600">
+                <a href="nou.html">農業ジョブ</a>
+            </h1>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="nou.html" class="text-gray-600 hover:text-green-600 transition duration-150">トップ</a>
+                <a href="nou.html#features" class="text-gray-600 hover:text-green-600 transition duration-150">農業の魅力</a>
+                <a href="jobs.html" class="text-gray-600 hover:text-green-600 transition duration-150">研修先の農家紹介</a>
+                <a href="interviews.html" class="text-gray-600 hover:text-green-600 transition duration-150">経験者の体験</a>
+                <a href="#" onclick="openContactModal(event)" class="text-gray-600 hover:text-green-600 transition duration-150">相談窓口 (フォーム)</a>
+            </nav>
+            <button class="md:hidden text-gray-600 hover:text-green-600 p-2 rounded-lg" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="nou.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">トップ</a>
+            <a href="nou.html#features" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">農業の魅力</a>
+            <a href="jobs.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">研修先の農家紹介</a>
+            <a href="interviews.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">経験者の体験</a>
+            <a href="#" onclick="openContactModal(event); toggleMenu();" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">相談窓口 (フォーム)</a>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-12 sm:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="diagnosis-start" class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-green-800 text-center mb-4">
+                    自分に合った農業タイプ診断
+                </h2>
+                <p class="text-lg text-gray-600 text-center mb-10">
+                    いくつかの簡単な質問で、あなたにぴったりの農業スタイルを見つけましょう。
+                </p>
+
+                <div id="questions-area" class="space-y-8">
+                    <!-- Q1 -->
+                    <div class="question-card bg-green-50 p-6 rounded-lg border border-green-200">
+                        <p class="font-bold text-lg text-green-800 mb-4">Q1. 農業で最も重視するのは？</p>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q1" value="a" class="mr-3 text-green-600 focus:ring-green-500"><span>自分の裁量で全てを決められる「経営の自由度」</span></label>
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q1" value="b" class="mr-3 text-green-600 focus:ring-green-500"><span>給与や休日が保証される「雇用の安定性」</span></label>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="question-card bg-green-50 p-6 rounded-lg border border-green-200">
+                        <p class="font-bold text-lg text-green-800 mb-4">Q2. 農業のどんな側面に魅力を感じる？</p>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q2" value="a" class="mr-3 text-green-600 focus:ring-green-500"><span>栽培や飼育など、現場での「生産活動」</span></label>
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q2" value="b" class="mr-3 text-green-600 focus:ring-green-500"><span>販売戦略や販路開拓などの「事業運営」</span></label>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="question-card bg-green-50 p-6 rounded-lg border border-green-200">
+                        <p class="font-bold text-lg text-green-800 mb-4">Q3. 就農する上で、あなたの考えに近いのは？</p>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q3" value="a" class="mr-3 text-green-600 focus:ring-green-500"><span>リスクはあっても、すぐに自分の理想の農業を追求したい</span></label>
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q3" value="b" class="mr-3 text-green-600 focus:ring-green-500"><span>まずは給与をもらいながら、じっくり経験と技術を学びたい</span></label>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="question-card bg-green-50 p-6 rounded-lg border border-green-200">
+                        <p class="font-bold text-lg text-green-800 mb-4">Q4. 農業との関わり方として理想的なのは？</p>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q4" value="a" class="mr-3 text-green-600 focus:ring-green-500"><span>農業を本業として、生活のすべてを懸けたい</span></label>
+                            <label class="flex items-center p-3 bg-white rounded-md border has-[:checked]:bg-green-100 has-[:checked]:border-green-500 cursor-pointer transition"><input type="radio" name="q4" value="b" class="mr-3 text-green-600 focus:ring-green-500"><span>他の仕事や趣味と両立しながら、農業にも関わりたい</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <button id="show-result-btn" class="px-12 py-4 bg-yellow-400 text-gray-900 font-bold text-xl rounded-full shadow-xl hover:bg-yellow-300 transition duration-300 transform hover:scale-105 btn-primary">
+                        診断結果を見る
+                    </button>
+                </div>
+            </div>
+
+            <!-- 結果表示エリア -->
+            <div id="result-area" class="hidden mt-12"></div>
+        </div>
+    </main>
+
+    <!-- 相談メールフォーム (モーダルコンテナ) -->
+    <div id="contact-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" onclick="closeContactModal()">
+        <div class="relative max-w-lg w-full bg-white p-6 sm:p-8 rounded-xl shadow-2xl overflow-y-auto max-h-[95vh]" onclick="event.stopPropagation()">
+            <button onclick="closeContactModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 transition p-2 rounded-full hover:bg-gray-100"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg></button>
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-green-700 mb-4">無料就農相談フォーム</h3>
+            <p class="text-center text-gray-500 mb-8 text-sm">ご質問やご相談内容をご記入ください。原則3営業日以内にご返信いたします。</p>
+            <form id="inquiryForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <div><label for="name" class="block text-sm font-medium text-gray-700 mb-1">お名前 <span class="text-red-500">*</span></label><input type="text" id="name" name="name" required class="form-input" placeholder="例: 山田 太郎"></div>
+                <div><label for="email" class="block text-sm font-medium text-gray-700 mb-1">メールアドレス <span class="text-red-500">*</span></label><input type="email" id="email" name="email" required class="form-input" placeholder="例: your.name@example.com"></div>
+                <div><label for="message" class="block text-sm font-medium text-gray-700 mb-1">お問い合わせ内容 <span class="text-red-500">*</span></label><textarea id="message" name="message" rows="5" required class="form-input" placeholder="具体的なご質問やご相談内容をご記入ください。"></textarea></div>
+                <div class="pt-4"><button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl shadow-md hover:bg-green-700 transition duration-300 btn-primary">内容を確認して送信する</button></div>
+            </form>
+            <div id="responseMessage" class="mt-6 p-4 rounded-lg text-center hidden"></div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm border-b border-gray-700 pb-4 mb-4">
+                <p class="font-bold text-lg mb-4 md:mb-0">農業ジョブ</p>
+                <nav class="flex space-x-6"><a href="#" class="text-gray-300 hover:text-green-400">会社概要</a><a href="#" class="text-gray-300 hover:text-green-400">利用規約</a><a href="#" class="text-gray-300 hover:text-green-400">プライバシーポリシー</a></nav>
+            </div>
+            <p class="text-center text-gray-500 text-xs">&copy; 2024 農業ジョブ All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 共通のJS
+        function toggleMenu(){const e=document.getElementById("mobile-menu");e.classList.contains("hidden")?e.classList.remove("hidden"):e.classList.add("hidden")}function openContactModal(e){e&&e.preventDefault();const t=document.getElementById("contact-modal");t.classList.remove("hidden"),document.body.style.overflow="hidden"}function closeContactModal(){const e=document.getElementById("contact-modal");e.classList.add("hidden"),document.body.style.overflow="auto";const t=document.getElementById("responseMessage");t.classList.add("hidden"),t.classList.remove("bg-red-100","text-red-800","bg-green-100","text-green-800"),t.textContent=""}function handleFormSubmit(e){e.preventDefault();const t=document.getElementById("inquiryForm"),n=document.getElementById("responseMessage");console.log("Form Data Submitted:",Object.fromEntries(new FormData(t).entries())),n.classList.add("hidden"),n.classList.remove("bg-red-100","text-red-800","bg-green-100","text-green-800"),n.textContent="お問い合わせを受け付けました。",n.classList.remove("hidden"),n.classList.add("bg-green-100","text-green-800"),t.reset()}
+
+        // 診断ロジック
+        document.getElementById('show-result-btn').addEventListener('click', () => {
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            const q4 = document.querySelector('input[name="q4"]:checked');
+
+            if (!q1 || !q2 || !q3 || !q4) {
+                alert('すべての質問に回答してください。');
+                return;
+            }
+
+            let resultType = '';
+            if (q4.value === 'b') {
+                resultType = 'part_time'; // Q4で「兼業」を選んだら最優先
+            } else if (q1.value === 'a' && q3.value === 'a') {
+                resultType = 'independent'; // 自由度重視、リスク許容
+            } else if (q1.value === 'b' && q2.value === 'a') {
+                resultType = 'employed'; // 安定性重視、生産活動に興味
+            } else if (q1.value === 'b' && q2.value === 'b') {
+                resultType = 'employed_then_independent'; // 安定から始め、事業運営に興味
+            } else {
+                resultType = 'independent'; // 上記以外は独立タイプに
+            }
+
+            displayResult(resultType);
+        });
+
+        function displayResult(type) {
+            const results = {
+                independent: {
+                    title: '独立自営就農タイプ',
+                    description: 'あなたは、自分のビジョンと裁量で農業を切り拓きたい経営者タイプ。リスクを恐れず、栽培から販売まで全てを自分でコントロールすることに大きなやりがいを感じるでしょう。強い意志と実行力が成功の鍵です。',
+                    icon: '🚀',
+                    link: 'interviews.html',
+                    linkText: '独立した先輩の体験談を見る'
+                },
+                employed: {
+                    title: '雇用就農タイプ',
+                    description: 'あなたは、安定した環境で農業のプロフェッショナルを目指したい職人タイプ。経営のリスクは負わず、栽培や飼育といった生産活動に集中したいと考えています。大規模な農業法人などで専門スキルを磨くのに向いています。',
+                    icon: '👨‍🌾',
+                    link: 'jobs.html',
+                    linkText: '研修・就職先を探す'
+                },
+                employed_then_independent: {
+                    title: '雇用就農後、独立タイプ',
+                    description: 'あなたは、将来の独立を見据え、まずは安定した環境でスキルと経験を積みたい堅実派タイプ。農業法人で給与を得ながら現場のノウハウと経営感覚を学び、満を持して自分の農園を持つことを目指します。',
+                    icon: '📈',
+                    link: 'jobs.html',
+                    linkText: 'まずは研修先を探す'
+                },
+                part_time: {
+                    title: '兼業農家（半農半X）タイプ',
+                    description: 'あなたは、現在の仕事やライフスタイルを維持しつつ、農業にも関わりたいバランス重視タイプ。「週末農業」や、特定の時期だけ農作業を行うなど、自分のペースで自然と触れ合う生活を理想としています。',
+                    icon: '🏡',
+                    link: 'interviews.html',
+                    linkText: '多様な働き方の事例を見る'
+                }
+            };
+
+            const resultData = results[type];
+            const resultArea = document.getElementById('result-area');
+            
+            resultArea.innerHTML = `
+                <div class="result-card bg-white p-8 sm:p-12 rounded-2xl shadow-xl text-center">
+                    <p class="text-gray-600 mb-2">あなたのタイプは...</p>
+                    <div class="text-6xl mb-4">${resultData.icon}</div>
+                    <h3 class="text-3xl font-bold text-green-700 mb-4">${resultData.title}</h3>
+                    <p class="text-gray-700 leading-relaxed max-w-2xl mx-auto mb-8">${resultData.description}</p>
+                    <div class="flex justify-center items-center gap-4 flex-wrap">
+                         <a href="${resultData.link}" class="inline-block px-6 py-3 bg-green-600 text-white font-bold rounded-full shadow-md hover:bg-green-700 transition btn-primary">
+                            ${resultData.linkText}
+                        </a>
+                        <button onclick="location.reload()" class="inline-block px-6 py-3 bg-gray-200 text-gray-800 font-bold rounded-full hover:bg-gray-300 transition">
+                            もう一度診断する
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('diagnosis-start').classList.add('hidden');
+            resultArea.classList.remove('hidden');
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
