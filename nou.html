@@ -3,91 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>サンプルページ-就農応援ナビ - 未来を耕す第一歩</title>
+    <title>サンプル架空ページ-農業ジョブ - 未来を耕す第一歩</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Interフォントを使用 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        /* カスタムフォント設定 (Interは英語だが、Tailwindで一般的な日本語フォントも考慮) */
+        /* デフォルトフォントをInterと指定し、日本語のフォールバックを設定 */
         body {
-            font-family: 'Inter', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-            color: #333;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            /* 全体背景のカスタムスタイル：薄い緑とドットパターン */
+            background-color: #f0fdf4; /* 非常に薄いグリーン系の背景色 (emerald-50) */
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d1fae5' fill-opacity='0.5'%3E%3Cpath d='M6 0a6 6 0 1 0 0 12A6 6 0 0 0 6 0zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 60px 60px; /* パターンのサイズを調整 */
+            background-blend-mode: multiply; 
         }
-        /* メインの緑色 */
-        .color-primary {
-            background-color: #38a169; /* Tailwind green-600 */
+        /* ボタンのアニメーション */
+        .btn-primary {
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .text-primary {
-            color: #38a169;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4); /* 緑色の影 */
+        }
+        /* カードホバーエフェクト */
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        /* フォームのスタイル */
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus {
+            border-color: #10b981; /* emerald-500 */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="text-gray-800">
 
     <!-- ヘッダー (ナビゲーション) -->
     <header class="bg-white shadow-md sticky top-0 z-10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-green-700">サンプルページ-就農応援ナビ</a>
-            <nav class="hidden md:flex space-x-6 text-gray-600 font-medium">
-                <a href="#about" class="hover:text-green-600">就農の理由</a>
-                <a href="#steps" class="hover:text-green-600">ステップ</a>
-                <a href="#support" class="hover:text-green-600">サポート</a>
-                <a href="#contact" class="px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition duration-300 shadow-md">無料相談</a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-green-600">
+                <a href="nou.html">サンプル架空ページ-農業ジョブ</a>
+            </h1>
+            <!-- デスクトップメニュー -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="nou.html" class="text-green-600 font-bold transition duration-150">トップ</a>
+                <a href="nou.html#features" class="text-gray-600 hover:text-green-600 transition duration-150">農業の魅力</a>
+                <a href="jobs.html" class="text-gray-600 hover:text-green-600 transition duration-150">研修先の農家紹介</a>
+                <a href="interviews.html" class="text-gray-600 hover:text-green-600 transition duration-150">経験者の体験</a>
+                <a href="#" onclick="openContactModal(event)" class="text-gray-600 hover:text-green-600 transition duration-150">相談窓口 (フォーム)</a>
             </nav>
-            <!-- モバイルメニューボタン (省略) -->
+            <button class="md:hidden text-gray-600 hover:text-green-600 p-2 rounded-lg" onclick="toggleMenu()">
+                <!-- メニューアイコン (lucide:menu) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+        <!-- モバイルメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="nou.html" class="block px-4 py-3 text-sm text-green-700 font-bold hover:bg-gray-50 border-b" onclick="toggleMenu()">トップ</a>
+            <a href="nou.html#features" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">農業の魅力</a>
+            <a href="jobs.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">研修先の農家紹介</a>
+            <a href="interviews.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">経験者の体験</a>
+            <a href="#" onclick="openContactModal(event); toggleMenu();" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">相談窓口 (フォーム)</a>
         </div>
     </header>
 
     <!-- メインビジュアルエリア -->
-    <section class="relative bg-cover bg-center h-[50vh] md:h-[70vh] flex items-center justify-center" 
-             style="background-image: url('https://placehold.co/1200x800/22c55e/ffffff?text=豊かな田園風景');">
-        <div class="absolute inset-0 bg-black opacity-40"></div>
-        <div class="text-center relative z-10 p-6">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4">
-                あなたの「やりたい！」をカタチに。
-            </h1>
-            <p class="text-xl sm:text-2xl text-white font-light mb-8">
-                就農という新しい働き方を、全力でサポートします。
-            </p>
-            <!-- 最重要CTAボタン -->
-            <div class="space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="#contact" class="inline-block px-8 py-4 bg-yellow-400 text-gray-900 font-bold text-lg rounded-full shadow-xl hover:bg-yellow-300 transition duration-300 transform hover:scale-105">
-                    無料相談を予約する
-                </a>
-                <a href="#steps" class="inline-block px-8 py-4 bg-white text-green-700 font-bold text-lg rounded-full shadow-xl hover:bg-gray-100 transition duration-300 transform hover:scale-105">
-                    就農ステップをチェックする
-                </a>
+    <section class="bg-green-600 py-8 sm:py-12 md:py-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative bg-cover bg-center shadow-2xl overflow-hidden h-[50vh] md:h-[65vh] flex items-center justify-center" 
+                 style="background-image: url('image/hero_background.jpg');">
+                <div class="absolute inset-0 bg-black opacity-40"></div>
+                <div class="text-center relative z-10 p-6">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">
+                        あなたの「やりたい！」をカタチに。
+                    </h1>
+                    <p class="text-xl sm:text-2xl text-white font-light mb-8" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">
+                        就農という新しい働き方を、全力でサポートします。
+                    </p>
+                    <!-- 最重要CTAボタン -->
+                    <div class="space-y-4 sm:space-y-0 sm:space-x-6">
+                        <button onclick="openContactModal(event)" class="inline-block px-8 py-4 bg-yellow-400 text-gray-900 font-bold text-lg rounded-full shadow-xl hover:bg-yellow-300 transition duration-300 transform hover:scale-105 btn-primary">
+                            無料相談を予約する
+                        </button>
+                        <a href="#steps" class="inline-block px-8 py-4 bg-white text-green-700 font-bold text-lg rounded-full shadow-xl hover:bg-gray-100 transition duration-300 transform hover:scale-105 btn-primary">
+                            自分あった農業タイプ診断
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 就農を始める3つの理由 -->
-    <section id="about" class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-12">就農を始める3つの理由</h2>
+    <!-- 農業の魅力 -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-green-800 mb-12">農業を始める3つの魅力</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 <!-- 理由1: ライフスタイル -->
-                <div class="p-6 bg-green-50 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="feature-card p-6 bg-green-50 rounded-xl shadow-lg transition duration-300">
                     <div class="text-5xl text-green-600 mb-4">👨‍👩‍👧‍👦</div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">豊かなライフスタイル</h3>
+                    <h3 class="text-xl font-semibold text-green-800 mb-3">豊かなライフスタイル</h3>
                     <p class="text-gray-600">
                         自然の中で働き、自分の収穫物を味わう喜び。家族との時間を大切にしながら、心身ともに充実した生活を実現できます。
                     </p>
                 </div>
 
                 <!-- 理由2: 地域貢献 -->
-                <div class="p-6 bg-green-50 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="feature-card p-6 bg-green-50 rounded-xl shadow-lg transition duration-300">
                     <div class="text-5xl text-green-600 mb-4">🌱</div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">地方創生・貢献</h3>
+                    <h3 class="text-xl font-semibold text-green-800 mb-3">地方創生・貢献</h3>
                     <p class="text-gray-600">
                         食を支える仕事として、地域社会に不可欠な存在に。地域に新しい風を吹き込み、持続可能な未来作りに貢献します。
                     </p>
                 </div>
 
                 <!-- 理由3: 将来性 -->
-                <div class="p-6 bg-green-50 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="feature-card p-6 bg-green-50 rounded-xl shadow-lg transition duration-300">
                     <div class="text-5xl text-green-600 mb-4">📈</div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3">テクノロジーと将来性</h3>
+                    <h3 class="text-xl font-semibold text-green-800 mb-3">テクノロジーと将来性</h3>
                     <p class="text-gray-600">
                         スマート農業など新しい技術が進化中。安定した食料需要と掛け合わせ、将来性のある経営を目指すことができます。
                     </p>
@@ -96,86 +140,86 @@
         </div>
     </section>
 
-    <!-- 就農までのステップ -->
+    <!-- 就農までのステップ (デザイン更新) -->
     <section id="steps" class="py-16 bg-gray-100">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">就農までの5ステップ</h2>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-green-800 text-center mb-12">就農までの5ステップ</h2>
             
-            <div class="relative">
-                <!-- 縦の線 (デスクトップのみ) -->
-                <div class="hidden md:block absolute left-1/2 w-1 bg-green-300 h-full -ml-0.5"></div>
-
-                <!-- ステップアイテムコンテナ -->
-                <div class="space-y-12">
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8">
                     
                     <!-- ステップ1 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
-                        <div class="w-full md:w-5/12 text-center md:text-left md:odd:text-right">
-                            <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-600">
-                                <span class="text-4xl text-green-600 font-bold mb-2 block">1. 興味を持つ・情報収集</span>
-                                <p class="text-gray-600 mt-2">就農セミナーへの参加や、関連書籍の読破からスタート。どんな農業をしたいか、漠然としたイメージを具体化させましょう。</p>
+                    <div class="step-item flex">
+                        <div class="flex flex-col items-center mr-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg z-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb"><path d="M15 14c.2-.9.7-1.7 1.4-2.3.9-.9 1.4-2 1.4-3.3C17.8 5.6 15 3 12 3S6.2 5.6 6.2 8.4c0 1.3.5 2.4 1.4 3.3.7.6 1.2 1.4 1.4 2.3"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
                             </div>
+                            <div class="w-px h-full bg-green-300"></div>
                         </div>
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white font-bold text-lg shadow-2xl absolute md:left-1/2 md:-ml-5 top-0 md:top-auto z-10 border-4 border-gray-100">
-                            🤔
+                        <div class="pb-8">
+                            <span class="text-xl font-bold text-green-700">STEP 1</span>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-1 mb-2">興味を持つ・情報収集</h3>
+                            <p class="text-gray-600">就農セミナーへの参加や、関連書籍の読破からスタート。どんな農業をしたいか、漠然としたイメージを具体化させましょう。</p>
                         </div>
-                        <div class="hidden md:block w-5/12"></div>
                     </div>
 
                     <!-- ステップ2 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
-                        <div class="w-full md:w-5/12 text-center md:text-left md:odd:text-right">
-                            <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-600">
-                                <span class="text-4xl text-green-600 font-bold mb-2 block">2. 計画を立てる</span>
-                                <p class="text-gray-600 mt-2">資金計画、栽培作物、目標とする経営規模を明確に。独立か法人就職か、経営形態を決定する重要な段階です。</p>
+                    <div class="step-item flex">
+                        <div class="flex flex-col items-center mr-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg z-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list"><rect width="8" height="4" x="8" y="2"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 15h4"/><path d="M8 11h.01"/><path d="M8 15h.01"/></svg>
                             </div>
+                            <div class="w-px h-full bg-green-300"></div>
                         </div>
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white font-bold text-lg shadow-2xl absolute md:left-1/2 md:-ml-5 top-0 md:top-auto z-10 border-4 border-gray-100">
-                            📝
+                        <div class="pb-8">
+                            <span class="text-xl font-bold text-green-700">STEP 2</span>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-1 mb-2">計画を立てる</h3>
+                            <p class="text-gray-600">資金計画、栽培作物、目標とする経営規模を明確に。独立か法人就職か、経営形態を決定する重要な段階です。</p>
                         </div>
-                        <div class="hidden md:block w-5/12"></div>
                     </div>
 
                     <!-- ステップ3 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
-                        <div class="w-full md:w-5/12 text-center md:text-left md:odd:text-right">
-                            <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-600">
-                                <span class="text-4xl text-green-600 font-bold mb-2 block">3. 研修を受ける</span>
-                                <p class="text-gray-600 mt-2">農業大学校や、現役農家の下で実践的なスキルを習得。知識だけでなく、現場で役立つノウハウを身につけましょう。</p>
+                    <div class="step-item flex">
+                        <div class="flex flex-col items-center mr-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg z-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handshake"><path d="m11 17 2 2-2 2-2-2"/><path d="M21 17h-5"/><path d="M15 17l-2-2-2 2-2-2h-5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-5"/></svg>
                             </div>
+                            <div class="w-px h-full bg-green-300"></div>
                         </div>
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white font-bold text-lg shadow-2xl absolute md:left-1/2 md:-ml-5 top-0 md:top-auto z-10 border-4 border-gray-100">
-                            🤝
+                        <div class="pb-8">
+                            <span class="text-xl font-bold text-green-700">STEP 3</span>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-1 mb-2">研修を受ける</h3>
+                            <p class="text-gray-600">農業大学校や、現役農家の下で実践的なスキルを習得。知識だけでなく、現場で役立つノウハウを身につけましょう。</p>
                         </div>
-                        <div class="hidden md:block w-5/12"></div>
                     </div>
 
                     <!-- ステップ4 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
-                        <div class="w-full md:w-5/12 text-center md:text-left md:odd:text-right">
-                            <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-600">
-                                <span class="text-4xl text-green-600 font-bold mb-2 block">4. 資金調達・農地の確保</span>
-                                <p class="text-gray-600 mt-2">補助金や融資制度を活用し、初期投資費用を準備。並行して、地域の行政機関と連携し、農地の賃借や購入を進めます。</p>
+                    <div class="step-item flex">
+                        <div class="flex flex-col items-center mr-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg z-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-piggy-bank"><path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="M17 5v-.3C17 3.9 16.1 3 15.3 3h-3.6C10.9 3 10 3.9 10 4.7V5"/><path d="M6 12h.01"/><path d="M13 16v-4"/></svg>
                             </div>
+                            <div class="w-px h-full bg-green-300"></div>
                         </div>
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white font-bold text-lg shadow-2xl absolute md:left-1/2 md:-ml-5 top-0 md:top-auto z-10 border-4 border-gray-100">
-                            💰
+                        <div class="pb-8">
+                            <span class="text-xl font-bold text-green-700">STEP 4</span>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-1 mb-2">資金調達・農地の確保</h3>
+                            <p class="text-gray-600">補助金や融資制度を活用し、初期投資費用を準備。並行して、地域の行政機関と連携し、農地の賃借や購入を進めます。</p>
                         </div>
-                        <div class="hidden md:block w-5/12"></div>
                     </div>
 
                     <!-- ステップ5 -->
-                    <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
-                        <div class="w-full md:w-5/12 text-center md:text-left md:odd:text-right">
-                            <div class="bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-600">
-                                <span class="text-4xl text-green-600 font-bold mb-2 block">5. 就農開始！</span>
-                                <p class="text-gray-600 mt-2">いよいよ経営計画に基づき農業をスタート！最初は苦労もありますが、このサイトは常にあなたの伴走者としてサポートします。</p>
+                    <div class="step-item flex">
+                        <div class="flex flex-col items-center mr-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg z-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5a2 2 0 0 0 2 2c.4 0 2.5-1.13 4-2.5 1-.94 1.5-2 1.5-3 0-1-.5-2-1.5-3s-2-1.5-3-1.5z"/><path d="M10 21v-4"/><path d="M10 20h4"/><path d="M15 17h4"/><path d="M15 20v-4"/><path d="M12 15V2.5L16 10H8z"/></svg>
                             </div>
                         </div>
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white font-bold text-lg shadow-2xl absolute md:left-1/2 md:-ml-5 top-0 md:top-auto z-10 border-4 border-gray-100">
-                            🚀
+                        <div class="pb-8">
+                            <span class="text-xl font-bold text-green-700">STEP 5</span>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-1 mb-2">就農開始！</h3>
+                            <p class="text-gray-600">いよいよ経営計画に基づき農業をスタート！最初は苦労もありますが、このサイトは常にあなたの伴走者としてサポートします。</p>
                         </div>
-                        <div class="hidden md:block w-5/12"></div>
                     </div>
 
                 </div>
@@ -185,30 +229,31 @@
 
     <!-- 注目コンテンツ・サポートメニュー -->
     <section id="support" class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">注目コンテンツ・サポートメニュー</h2>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-green-800 text-center mb-12">注目コンテンツ・サポートメニュー</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 <!-- カード1: 資金計画 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
-                    <img src="https://placehold.co/600x400/10b981/ffffff?text=資金計画" alt="資金計画のイラスト" class="w-full h-40 object-cover">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border feature-card transition duration-300">
+                    <img src="image/22.jpg" alt="補助金制度の解説イメージ" class="w-full h-40 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">特集: 失敗しない資金計画</h3>
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">新規就農者向け補助金制度</h3>
                         <p class="text-gray-600 mb-4">利用可能な補助金や融資制度、就農時の平均初期費用など、お金に関する全てを解説します。</p>
-                        <a href="#" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                        <a href="subsidies.html" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                             詳細を見る
+                            <!-- Lightbulb SVG Icon -->
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
                     </div>
                 </div>
 
                 <!-- カード2: 研修制度 -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
-                    <img src="https://placehold.co/600x400/34d399/ffffff?text=研修風景" alt="研修風景のイラスト" class="w-full h-40 object-cover">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border feature-card transition duration-300">
+                    <img src="image/1 (3).png" alt="研修風景のイラスト" class="w-full h-40 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">研修制度を探す</h3>
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">研修先の農家を探す</h3>
                         <p class="text-gray-600 mb-4">地域別、作物別で絞り込み検索。あなたにぴったりの農業大学校や実践農家研修プログラムを見つけましょう。</p>
-                        <a href="#" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                        <a href="jobs.html" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                             プログラム一覧
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
@@ -216,12 +261,12 @@
                 </div>
 
                 <!-- カード3: 事例インタビュー -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
-                    <img src="https://placehold.co/600x400/059669/ffffff?text=笑顔の農家" alt="笑顔の農家の写真" class="w-full h-40 object-cover">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border feature-card transition duration-300">
+                    <img src="image/23.png" alt="笑顔の農家の写真" class="w-full h-40 object-cover object-top">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold text-green-700 mb-2">就農事例インタビュー</h3>
                         <p class="text-gray-600 mb-4">未経験から独立した先輩や、安定した法人に就職した方など、リアルな声をご紹介します。</p>
-                        <a href="#" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                        <a href="interviews.html" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                             事例集を見る
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
@@ -239,33 +284,195 @@
             <p class="text-xl text-green-100 mb-8">
                 あなたの疑問や不安を、経験豊富なアドバイザーが解決します。まずはお気軽にご相談ください。
             </p>
-            <div class="space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="#" class="inline-block px-10 py-4 bg-yellow-400 text-gray-900 font-bold text-xl rounded-full shadow-2xl hover:bg-yellow-300 transition duration-300 transform hover:scale-105">
+            <div>
+                <button onclick="openContactModal(event)" class="inline-block px-10 py-4 bg-yellow-400 text-gray-900 font-bold text-xl rounded-full shadow-2xl hover:bg-yellow-300 transition duration-300 transform hover:scale-105 btn-primary">
                     無料個別相談を予約する
-                </a>
-                <a href="#" class="inline-block px-10 py-4 bg-white text-green-700 font-bold text-xl rounded-full shadow-2xl hover:bg-gray-100 transition duration-300 transform hover:scale-105">
-                    資料請求 (無料)
-                </a>
+                </button>
             </div>
         </div>
     </section>
 
     <!-- フッター -->
     <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="mb-4">
-                <a href="#" class="text-lg font-bold hover:text-green-400">就農応援ナビ</a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm border-b border-gray-700 pb-4 mb-4">
+                <p class="font-bold text-lg mb-4 md:mb-0">農業ジョブ</p>
+                <nav class="flex space-x-6">
+                    <a href="#" class="text-gray-300 hover:text-green-400">会社概要</a>
+                    <a href="#" class="text-gray-300 hover:text-green-400">利用規約</a>
+                    <a href="#" class="text-gray-300 hover:text-green-400">プライバシーポリシー</a>
+                </nav>
             </div>
-            <nav class="space-x-4 mb-4 text-sm">
-                <a href="#" class="hover:text-green-400">プライバシーポリシー</a>
-                <a href="#" class="hover:text-green-400">利用規約</a>
-                <a href="#" class="hover:text-green-400">運営会社</a>
-            </nav>
-            <p class="text-gray-500 text-sm">
-                &copy; 2024 就農応援ナビ All rights reserved.
-            </p>
+            <p class="text-center text-gray-500 text-xs">&copy; 2024 農業ジョブ All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- 相談メールフォーム (モーダルコンテナ) -->
+    <div id="contact-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" onclick="closeContactModal()">
+        <div class="relative max-w-lg w-full bg-white p-6 sm:p-8 rounded-xl shadow-2xl overflow-y-auto max-h-[95vh]" onclick="event.stopPropagation()">
+            
+            <button onclick="closeContactModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 transition p-2 rounded-full hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </button>
+
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-green-700 mb-4">無料就農相談フォーム</h3>
+            <p class="text-center text-gray-500 mb-8 text-sm">
+                ご質問やご相談内容をご記入ください。原則3営業日以内にご返信いたします。
+            </nav>
+
+            <form id="inquiryForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">お名前 <span class="text-red-500">*</span></label>
+                    <input type="text" id="name" name="name" required class="form-input" placeholder="例: 山田 太郎">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">メールアドレス <span class="text-red-500">*</span></label>
+                    <input type="email" id="email" name="email" required class="form-input" placeholder="例: your.name@example.com">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">電話番号 (任意)</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="例: 090-1234-5678">
+                </div>
+                <div>
+                    <label for="product" class="block text-sm font-medium text-gray-700 mb-1">希望される品目 (複数選択可)</label>
+                    <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="product" value="野菜" class="rounded text-green-600 focus:ring-green-500">
+                            <span>野菜・果物</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="product" value="稲作" class="rounded text-green-600 focus:ring-green-500">
+                            <span>稲作・穀物</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="product" value="酪農" class="rounded text-green-600 focus:ring-green-500">
+                            <span>酪農・畜産</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="product" value="花卉" class="rounded text-green-600 focus:ring-green-500">
+                            <span>花卉 (花)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="product" value="特用作物" class="rounded text-green-600 focus:ring-green-500">
+                            <span>特用作物</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="product" value="未定" class="rounded text-green-600 focus:ring-green-500">
+                            <span>特に未定</span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label for="start_time" class="block text-sm font-medium text-gray-700 mb-1">就農希望時期 <span class="text-red-500">*</span></label>
+                    <select id="start_time" name="start_time" required class="form-input">
+                        <option value="" disabled selected>選択してください</option>
+                        <option value="within_6_months">半年以内</option>
+                        <option value="within_1_year">1年以内</option>
+                        <option value="within_3_years">3年以内</option>
+                        <option value="undecided">まだ具体的に決まっていない</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">お問い合わせ種別 <span class="text-red-500">*</span></label>
+                    <select id="type" name="type" required class="form-input">
+                        <option value="" disabled selected>選択してください</option>
+                        <option value="training">研修農家について</option>
+                        <option value="experience">経験者の体験談について</option>
+                        <option value="support">就農支援制度について</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">お問い合わせ内容 <span class="text-red-500">*</span></label>
+                    <textarea id="message" name="message" rows="5" required class="form-input" placeholder="具体的なご質問やご相談内容をご記入ください。"></textarea>
+                </div>
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl shadow-md hover:bg-green-700 transition duration-300 btn-primary">
+                        内容を確認して送信する
+                    </button>
+                </div>
+            </form>
+            <div id="responseMessage" class="mt-6 p-4 rounded-lg text-center hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // 共通の JavaScript 関数
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        function openContactModal(event) {
+            if (event) { event.preventDefault(); }
+            const modal = document.getElementById('contact-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeContactModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+
+            const responseMessage = document.getElementById('responseMessage');
+            responseMessage.classList.add('hidden');
+            responseMessage.classList.remove('bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+            responseMessage.textContent = '';
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('inquiryForm');
+            const responseMessage = document.getElementById('responseMessage');
+            
+            const selectedProducts = Array.from(form.querySelectorAll('input[name="product"]:checked')).map(cb => cb.value);
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            data.products = selectedProducts;
+            console.log("Form Data Submitted:", data);
+
+            responseMessage.classList.add('hidden');
+            responseMessage.classList.remove('bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+            
+            responseMessage.textContent = 'お問い合わせを受け付けました。ご入力いただいたメールアドレスにご確認のメールを送信しました。';
+            responseMessage.classList.remove('hidden');
+            responseMessage.classList.add('bg-green-100', 'text-green-800');
+            
+            form.reset();
+        }
+
+        // スクロールアニメーション
+        document.addEventListener('DOMContentLoaded', () => {
+            const stepItems = document.querySelectorAll('.step-item');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            stepItems.forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+    <style>
+        .step-item { opacity: 0; transform: translate(-30px, 20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .step-item.is-visible { opacity: 1; transform: translate(0, 0); }
+        .step-item:nth-child(2) { transition-delay: 0.1s; }
+        .step-item:nth-child(3) { transition-delay: 0.2s; }
+        .step-item:nth-child(4) { transition-delay: 0.3s; }
+        .step-item:nth-child(5) { transition-delay: 0.4s; }
+    </style>
 </body>
 </html>

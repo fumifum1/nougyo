@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規就農者向け補助金・支援制度 | 農業ジョブ</title>
+    <!-- Tailwind CSS CDNを読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Interフォントを使用 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* デフォルトフォントをInterと指定し、日本語のフォールバックを設定 */
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            /* 全体背景のカスタムスタイル：薄い緑とドットパターン */
+            background-color: #f0fdf4; /* 非常に薄いグリーン系の背景色 (emerald-50) */
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d1fae5' fill-opacity='0.5'%3E%3Cpath d='M6 0a6 6 0 1 0 0 12A6 6 0 0 0 6 0zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 60px 60px; /* パターンのサイズを調整 */
+            background-blend-mode: multiply; 
+        }
+        /* ボタンのアニメーション */
+        .btn-primary {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4); /* 緑色の影 */
+        }
+        /* フォームのスタイル */
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus {
+            border-color: #10b981; /* emerald-500 */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+        /* 記事コンテンツのスタイル */
+        .content-area h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #047857; /* green-800 */
+            margin-top: 2.5rem; /* mt-10 */
+            margin-bottom: 1rem; /* mb-4 */
+            padding-bottom: 0.5rem; /* pb-2 */
+            border-bottom: 2px solid #6ee7b7; /* border-b-2 border-green-300 */
+        }
+        .content-area ul {
+            list-style-type: disc;
+            margin-left: 1.5rem; /* ml-6 */
+            margin-bottom: 1rem; /* mb-4 */
+            line-height: 1.75; /* leading-relaxed */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- ヘッダー -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-green-600">
+                <a href="nou.html">サンプル架空ページ-農業ジョブ</a>
+            </h1>
+            <!-- デスクトップメニュー -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="nou.html" class="text-gray-600 hover:text-green-600 transition duration-150">トップ</a>
+                <a href="nou.html#features" class="text-gray-600 hover:text-green-600 transition duration-150">農業の魅力</a>
+                <a href="jobs.html" class="text-gray-600 hover:text-green-600 transition duration-150">研修先の農家紹介</a>
+                <a href="interviews.html" class="text-gray-600 hover:text-green-600 transition duration-150">経験者の体験</a>
+                <a href="#" onclick="openContactModal(event)" class="text-gray-600 hover:text-green-600 transition duration-150">相談窓口 (フォーム)</a>
+            </nav>
+            <button class="md:hidden text-gray-600 hover:text-green-600 p-2 rounded-lg" onclick="toggleMenu()">
+                <!-- メニューアイコン (lucide:menu) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+        <!-- モバイルメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="nou.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">トップ</a>
+            <a href="nou.html#features" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">農業の魅力</a>
+            <a href="jobs.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">研修先の農家紹介</a>
+            <a href="interviews.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b" onclick="toggleMenu()">経験者の体験</a>
+            <a href="#" onclick="openContactModal(event); toggleMenu();" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">相談窓口 (フォーム)</a>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-12 sm:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-green-800 text-center mb-4">
+                    新規就農者向け補助金・支援制度
+                </h2>
+                <p class="text-lg text-gray-600 text-center mb-10">
+                    農業を始めるあなたの夢を、資金面から力強くサポートする制度をご紹介します。
+                </p>
+
+                <div class="content-area">
+                    <p class="mb-6 leading-relaxed">
+                        「農業を始めたいけれど、初期費用や当面の生活費が心配…」そんな不安を抱える方は少なくありません。国や地方自治体は、次世代の農業の担い手を確保・育成するため、様々な補助金や支援制度を用意しています。ここでは代表的な制度をご紹介します。
+                    </p>
+
+                    <h3>経営開始資金（農業次世代人材投資事業）</h3>
+                    <p class="mb-4">
+                        最も代表的な支援制度の一つです。就農後の経営が安定するまでの最大3年間、年間最大150万円が交付されます。これにより、就農初期の所得が低い時期の生活費や経営費の不安を大幅に軽減できます。
+                    </p>
+                    <ul class="space-y-2">
+                        <li><strong>対象者:</strong> 独立・自営就農時の年齢が原則49歳以下の認定新規就農者 など</li>
+                        <li><strong>支援金額:</strong> 年間最大150万円</li>
+                        <li><strong>支援期間:</strong> 最長3年間</li>
+                        <li><strong>主な要件:</strong>
+                            <ul>
+                                <li>青年等就農計画の認定を受けていること</li>
+                                <li>農地の所有権または利用権を確保していること</li>
+                                <li>前年の世帯所得が600万円以下であること（一部例外あり）</li>
+                                <li>適切な研修を受けている、または十分な営農経験があること</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500 mt-2">※上記は概要です。詳細な要件や手続きは、必ずお住まいの市町村の農政担当部署にご確認ください。</p>
+
+                    <h3>その他の支援制度</h3>
+                    <p class="mb-4">
+                        経営開始資金の他にも、あなたの状況に合わせて活用できる様々な支援があります。
+                    </p>
+                    <ul class="space-y-3">
+                        <li><strong>青年等就農資金:</strong> 日本政策金融公庫が提供する、新規就農者向けの無利子の融資制度です。機械や施設の導入など、大規模な初期投資に活用できます。</li>
+                        <li><strong>自治体独自の支援:</strong> 都道府県や市町村が、移住支援金や家賃補助、独自の給付金など、地域の実情に合わせた支援を行っている場合があります。就農を希望する地域の情報を集めてみましょう。</li>
+                        <li><strong>経営体育成支援事業:</strong> 融資を活用して農業用機械等を導入する際に、融資残額の一部を補助する事業です。</li>
+                    </ul>
+
+                    <div class="mt-12 p-6 bg-green-50 border-l-4 border-green-500 rounded-r-lg">
+                        <h4 class="font-bold text-green-800 text-lg mb-2">まずは専門家にご相談を</h4>
+                        <p class="text-gray-700">
+                            どの制度が自分に合うのか、手続きが複雑で分からない、といったお悩みはありませんか？<br>
+                            農業ジョブでは、経験豊富なアドバイザーがあなたの状況をヒアリングし、最適な支援制度の活用方法や事業計画の作成を無料でサポートします。まずはお気軽にご相談ください。
+                        </p>
+                        <div class="text-center mt-6">
+                            <button onclick="openContactModal(event)" class="inline-block px-8 py-3 bg-yellow-400 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-300 transition duration-300 transform hover:scale-105 btn-primary">
+                                無料相談フォームへ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 相談メールフォーム (モーダルコンテナ) -->
+    <div id="contact-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden" onclick="closeContactModal()">
+        <div class="relative max-w-lg w-full bg-white p-6 sm:p-8 rounded-xl shadow-2xl overflow-y-auto max-h-[95vh]" onclick="event.stopPropagation()">
+            <button onclick="closeContactModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 transition p-2 rounded-full hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </button>
+            <h3 class="text-2xl sm:text-3xl font-bold text-center text-green-700 mb-4">無料就農相談フォーム</h3>
+            <p class="text-center text-gray-500 mb-8 text-sm">ご質問やご相談内容をご記入ください。原則3営業日以内にご返信いたします。</p>
+            <form id="inquiryForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <div><label for="name" class="block text-sm font-medium text-gray-700 mb-1">お名前 <span class="text-red-500">*</span></label><input type="text" id="name" name="name" required class="form-input" placeholder="例: 山田 太郎"></div>
+                <div><label for="email" class="block text-sm font-medium text-gray-700 mb-1">メールアドレス <span class="text-red-500">*</span></label><input type="email" id="email" name="email" required class="form-input" placeholder="例: your.name@example.com"></div>
+                <div><label for="phone" class="block text-sm font-medium text-gray-700 mb-1">電話番号 (任意)</label><input type="tel" id="phone" name="phone" class="form-input" placeholder="例: 090-1234-5678"></div>
+                <div><label for="type" class="block text-sm font-medium text-gray-700 mb-1">お問い合わせ種別 <span class="text-red-500">*</span></label><select id="type" name="type" required class="form-input"><option value="" disabled selected>選択してください</option><option value="training">研修農家について</option><option value="experience">経験者の体験談について</option><option value="support" selected>就農支援制度について</option><option value="other">その他</option></select></div>
+                <div><label for="message" class="block text-sm font-medium text-gray-700 mb-1">お問い合わせ内容 <span class="text-red-500">*</span></label><textarea id="message" name="message" rows="5" required class="form-input" placeholder="具体的なご質問やご相談内容をご記入ください。"></textarea></div>
+                <div class="pt-4"><button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl shadow-md hover:bg-green-700 transition duration-300 btn-primary">内容を確認して送信する</button></div>
+            </form>
+            <div id="responseMessage" class="mt-6 p-4 rounded-lg text-center hidden"></div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm border-b border-gray-700 pb-4 mb-4">
+                <p class="font-bold text-lg mb-4 md:mb-0">農業ジョブ</p>
+                <nav class="flex space-x-6"><a href="#" class="text-gray-300 hover:text-green-400">会社概要</a><a href="#" class="text-gray-300 hover:text-green-400">利用規約</a><a href="#" class="text-gray-300 hover:text-green-400">プライバシーポリシー</a></nav>
+            </div>
+            <p class="text-center text-gray-500 text-xs">&copy; 2024 農業ジョブ All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu(){const menu=document.getElementById("mobile-menu");menu.classList.contains("hidden")?menu.classList.remove("hidden"):menu.classList.add("hidden")}function openContactModal(e){e&&e.preventDefault();const t=document.getElementById("contact-modal");t.classList.remove("hidden"),document.body.style.overflow="hidden"}function closeContactModal(){const e=document.getElementById("contact-modal");e.classList.add("hidden"),document.body.style.overflow="auto";const t=document.getElementById("responseMessage");t.classList.add("hidden"),t.classList.remove("bg-red-100","text-red-800","bg-green-100","text-green-800"),t.textContent=""}function handleFormSubmit(e){e.preventDefault();const t=document.getElementById("inquiryForm"),n=document.getElementById("responseMessage");console.log("Form Data Submitted:",Object.fromEntries(new FormData(t).entries()));n.classList.add("hidden"),n.classList.remove("bg-red-100","text-red-800","bg-green-100","text-green-800"),n.textContent="お問い合わせを受け付けました。ご入力いただいたメールアドレスにご確認のメールを送信しました。",n.classList.remove("hidden"),n.classList.add("bg-green-100","text-green-800"),t.reset()}
+    </script>
+</body>
+</html>
